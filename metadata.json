@@ -1,0 +1,10 @@
+{
+  "name": "Natíva Clinic",
+  "description": "Premium aesthetic clinic website in Medellín, Colombia, featuring an interactive treatments catalog, an intelligent AI-powered treatment counselor, and a medical appointment booking system.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

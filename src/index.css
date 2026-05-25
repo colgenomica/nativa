@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", ui-serif, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-nativa-bg: #ebf1e6;
+  --color-nativa-card: #ffffff;
+  --color-nativa-card-hover: #f5f9f2;
+  --color-nativa-green-deep: #0f2b1d;
+  --color-nativa-green-accent: #c4d7b2;
+  --color-nativa-gold-warm: #ca9f33;
+  --color-nativa-gold-light: #524218;
+  --color-nativa-cream: #fbfcf9;
+  
+  --color-gold-50: #fdfaf2;
+  --color-gold-100: #f6ecd3;
+  --color-gold-200: #eedda7;
+  --color-gold-300: #e3c470;
+  --color-gold-400: #d8aa42;
+  --color-gold-500: #c1912f;
+  --color-gold-600: #a27221;
+}
+
+body {
+  background-color: var(--color-nativa-bg);
+  color: #24352f;
+  font-family: var(--font-sans);
+}
+
+.font-serif-elegant {
+  font-family: var(--font-serif);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(202, 159, 51, 0.3) rgba(247, 245, 240, 0.5);
+}
+
+/* Webkit scrollbar customization for premium aesthetic */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f7f5f0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(202, 159, 51, 0.3);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(202, 159, 51, 0.6);
+}
