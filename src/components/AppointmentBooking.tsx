@@ -196,7 +196,7 @@ export default function AppointmentBooking({ preselectedTreatmentId, preselected
       {/* Visual Title */}
       <div className="pb-6 border-b border-nativa-green-accent/60 space-y-2">
         <span className="text-xs font-semibold uppercase tracking-widest text-nativa-gold-warm">
-          Sede El Poblado, Medellín
+          Sede Mixy Mall Los Colores, Medellín
         </span>
         <h2 className="text-3xl md:text-4xl font-serif-elegant font-bold text-nativa-green-deep">
           Sistema de Reserva de Citas
@@ -449,7 +449,7 @@ export default function AppointmentBooking({ preselectedTreatmentId, preselected
 
                     <div className="flex items-center gap-1.5 pt-1 text-[10px]">
                       <span className="inline-block w-2 bg-emerald-500 rounded-full h-2"></span>
-                      <span className="text-emerald-700 font-bold">Estado: Confirmada (Sede Poblado)</span>
+                      <span className="text-emerald-700 font-bold">Estado: Confirmada (Sede Los Colores)</span>
                     </div>
                   </div>
                 ))}

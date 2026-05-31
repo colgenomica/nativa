@@ -14,7 +14,7 @@ export default function AboutUsSection({ onNavigate }: AboutUsSectionProps) {
           <Sparkles className="w-3.5 h-3.5 animate-pulse" /> NUESTRA ESENCIA
         </span>
         <h2 className="text-3xl md:text-4xl font-serif-elegant font-bold tracking-tight text-nativa-green-deep animate-text-glow">
-          Sobre NATÍVA CLINIC
+          Sobre ONE CLINIC
         </h2>
         <div className="w-20 h-0.5 bg-nativa-gold-warm mx-auto"></div>
         <p className="text-sm md:text-base text-slate-600 font-light max-w-xl mx-auto">
@@ -44,10 +44,10 @@ export default function AboutUsSection({ onNavigate }: AboutUsSectionProps) {
 
             <div className="space-y-5 text-slate-700 leading-relaxed font-light text-sm md:text-base text-justify">
               <p className="font-semibold text-nativa-green-deep text-base md:text-lg text-justify">
-                NATÍVA CLINIC nace de la unión entre ciencia estética, identidad latinoamericana y belleza natural.
+                ONE CLINIC nace de la unión entre ciencia estética dermoepidérmica, elegancia minimalista y refinamiento sutil.
               </p>
               <p className="text-justify">
-                Inspirada en la excelencia estética brasileña y creada para el mercado colombiano, NATÍVA surge con un propósito claro: transformar la experiencia de la estética moderna en una propuesta más accesible, sofisticada y humana.
+                Creada bajo la filosofía superior "Estética Avanzada" y pensada para brindar la más alta sofisticación, ONE CLINIC surge con el firme propósito de transformar el cuidado estético y regenerativo en una experiencia moderna, elegante y profundamente respetuosa de la fisonomía individual.
               </p>
               <p className="text-justify">
                 Creemos que el cuidado personal no debe sentirse distante ni exclusivo. Por eso desarrollamos un modelo de clínica que combina tecnología, protocolos modernos, atención cercana y resultados naturales, pensado para personas reales y estilos de vida actuales.
@@ -61,7 +61,7 @@ export default function AboutUsSection({ onNavigate }: AboutUsSectionProps) {
             </span>
             <button
               onClick={() => onNavigate("reservas")}
-              className="px-6 py-3 rounded-full bg-nativa-green-deep text-white text-xs font-bold hover:bg-[#123120] transition-colors shadow-md cursor-pointer"
+              className="px-6 py-3 rounded-full bg-nativa-green-deep text-white text-xs font-bold hover:bg-nativa-green-deep/90 transition-colors shadow-md cursor-pointer"
             >
               Agenda Consulta de Valoración
             </button>
@@ -73,45 +73,45 @@ export default function AboutUsSection({ onNavigate }: AboutUsSectionProps) {
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.15 }}
-          className="p-8 md:p-10 rounded-3xl bg-[#092215] border border-nativa-gold-warm/20 shadow-xl flex flex-col justify-between space-y-8 relative overflow-hidden"
+          className="p-8 md:p-10 rounded-3xl bg-[var(--color-nativa-green-deep)]/10 border border-nativa-green-accent/50 shadow-sm flex flex-col justify-between space-y-8 relative overflow-hidden"
         >
           {/* Subtle elegant backdrop pattern */}
-          <div className="absolute top-0 right-0 p-10 opacity-[0.03] pointer-events-none">
-            <Leaf className="w-64 h-64 text-white rotate-45 transform" />
+          <div className="absolute top-0 right-0 p-10 opacity-[0.05] pointer-events-none">
+            <Leaf className="w-64 h-64 text-nativa-green-deep rotate-45 transform" />
           </div>
 
           <div className="space-y-6 relative z-10">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-white/5 border border-nativa-gold-warm/35 text-nativa-gold-warm flex items-center justify-center">
-                <Sprout className="w-5 h-5 text-nativa-gold-warm animate-pulse" />
+              <div className="w-10 h-10 rounded-xl bg-white border border-nativa-gold-warm/35 text-nativa-green-deep flex items-center justify-center">
+                <Sprout className="w-5 h-5 text-nativa-green-deep animate-pulse" />
               </div>
-              <h3 className="text-xl md:text-2xl font-serif-elegant font-bold text-nativa-gold-warm uppercase tracking-wider">
-                EL SIGNIFICADO DE NATÍVA
+              <h3 className="text-xl md:text-2xl font-serif-elegant font-bold text-nativa-green-deep uppercase tracking-wider">
+                FILOSOFÍA ONE CLINIC
               </h3>
             </div>
 
             <div className="h-[2px] w-12 bg-nativa-gold-warm"></div>
 
-            <div className="space-y-5 text-slate-200 leading-relaxed font-light text-sm md:text-base text-justify">
-              <p className="font-semibold text-white text-base md:text-lg text-justify font-serif-elegant">
-                La palabra NATÍVA representa origen, esencia y autenticidad.
+            <div className="space-y-5 text-slate-705 leading-relaxed font-light text-sm md:text-base text-justify">
+              <p className="font-semibold text-nativa-green-deep text-base md:text-lg text-justify font-serif-elegant">
+                El concepto "ONE" representa la excelencia indiscutible y la belleza singular de cada ser.
               </p>
               <p className="text-justify">
-                Inspirada en la riqueza natural del trópico latinoamericano, la marca refleja una belleza que no busca transformar quién eres, sino resaltar tu mejor versión con armonía, confianza y naturalidad.
+                Creemos que existe un único balance ideal para ti: aquel en el que tu piel irradia luz y frescura sin perder jamás la esencia de tu personalidad. Nuestro enfoque prescinde de excesos para concentrarse únicamente en lo esencial.
               </p>
               <p className="text-justify">
-                NATÍVA conecta naturaleza, bienestar y ciencia estética en una experiencia moderna, elegante y emocionalmente cercana.
+                "Estética Avanzada" es la consolidación de terapias regenerativas y aparatología no invasiva de vanguardia, respaldada por la prestigiosa tecnología y escuela estética de Brasil, traída directamente de la mano de nuestros cofundadores de origen brasilero.
               </p>
             </div>
           </div>
 
-          <div className="pt-6 border-t border-white/10 relative z-10">
+          <div className="pt-6 border-t border-nativa-green-accent/40 relative z-10">
             <blockquote className="space-y-2">
-              <p className="font-serif-elegant italic text-base md:text-lg text-nativa-gold-warm font-medium">
+              <p className="font-serif-elegant italic text-base md:text-lg text-nativa-green-deep font-medium">
                 "Porque para nosotros, la verdadera belleza no se exagera. Se revela."
               </p>
-              <cite className="block text-[10px] tracking-widest text-slate-400 uppercase font-bold font-mono">
-                — Manifiesto de Marca NATÍVA
+              <cite className="block text-[10px] tracking-widest text-[#687055] uppercase font-bold font-mono">
+                — Manifiesto de Marca ONE CLINIC
               </cite>
             </blockquote>
           </div>
@@ -194,7 +194,7 @@ export default function AboutUsSection({ onNavigate }: AboutUsSectionProps) {
             {
               icon: ShieldCheck,
               title: "Seguridad Sin Concesiones",
-              desc: "Instalaciones de primer nivel, tecnología 3D alemana y productos originales certificados de prestigio mundial.",
+              desc: "Instalaciones de primer nivel, tecnología 3D de escuela brasilera y productos originales certificados de prestigio mundial.",
             },
           ].map((val, idx) => {
             const Icon = val.icon;

@@ -3,6 +3,18 @@ import { Search, Clock, BadgeDollarSign, Heart, ChevronRight, X } from "lucide-r
 import { motion } from "motion/react";
 import { Treatment } from "../types";
 
+// Import local image assets for correct bundling in production
+import glowingSkinSkincareImg from "../assets/images/glowing_skin_skincare_1779648705733.png";
+
+// Helper for dynamic API path mapping
+const resolveTreatmentImage = (imgUrl: string | undefined): string => {
+  if (!imgUrl) return glowingSkinSkincareImg;
+  if (imgUrl.includes("/src/assets/images/glowing_skin_skincare_1779648705733.png")) {
+    return glowingSkinSkincareImg;
+  }
+  return imgUrl;
+};
+
 // Backup fallback treatment dataset for immediate zero-loading render
 const INITIAL_TREATMENTS: Treatment[] = [
   {
@@ -14,7 +26,7 @@ const INITIAL_TREATMENTS: Treatment[] = [
     duration: "60 min",
     price: "$1.200.000 COP",
     benefits: ["Acelera la cicatrización notablemente", "Induce la regeneración celular natural", "Suaviza poros dilatados y microtextura", "Aporta un resplandor duradero"],
-    image: "/src/assets/images/glowing_skin_skincare_1779648705733.png"
+    image: glowingSkinSkincareImg
   },
   {
     id: "toxina",
@@ -217,7 +229,7 @@ export default function TreatmentsCatalog({ onBookTreatment, selectedId, clearSe
               {/* Cover treatment image banner */}
               <div className="relative h-44 w-full overflow-hidden bg-nativa-bg border-b border-nativa-green-accent">
                 <img
-                  src={treatment.image || "/src/assets/images/glowing_skin_skincare_1779648705733.png"}
+                  src={resolveTreatmentImage(treatment.image)}
                   alt={treatment.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out brightness-[0.96]"
                   referrerPolicy="no-referrer"
@@ -321,7 +333,7 @@ export default function TreatmentsCatalog({ onBookTreatment, selectedId, clearSe
               <div className="space-y-4">
                 <div className="h-52 w-full rounded-2xl overflow-hidden bg-nativa-bg border border-nativa-green-accent shadow-sm">
                   <img
-                    src={activeDetailTreatment.image || "/src/assets/images/glowing_skin_skincare_1779648705733.png"}
+                    src={resolveTreatmentImage(activeDetailTreatment.image)}
                     alt={activeDetailTreatment.name}
                     className="w-full h-full object-cover brightness-[0.97]"
                     referrerPolicy="no-referrer"

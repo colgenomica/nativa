@@ -1,14 +1,18 @@
 import { useState } from "react";
-import { Sparkles, Calendar, BookOpen, BrainCircuit, Heart, Menu, X, ArrowUpRight, Users } from "lucide-react";
+import { Sparkles, Calendar, BookOpen, BrainCircuit, Heart, Menu, X, ArrowUpRight, Users, ChevronDown, Globe } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 import HomeHero from "./components/HomeHero";
 import AboutUsSection from "./components/AboutUsSection";
 import TreatmentsCatalog from "./components/TreatmentsCatalog";
 import AppointmentBooking from "./components/AppointmentBooking";
 import AIAdvisor from "./components/AIAdvisor";
+import { useLanguage } from "./context/LanguageContext";
 
 export default function App() {
+  const { language, setLanguage, t } = useLanguage();
   const [activeTab, setActiveTab] = useState<"inicio" | "somos" | "tratamientos" | "reservas" | "asesor">("inicio");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
 
   // States to facilitate cross-tab quick selections
   const [preselectedId, setPreselectedId] = useState<string | null>(null);
@@ -34,9 +38,9 @@ export default function App() {
     setPreselectedId(treatmentId);
     // Find treatment name to display cleanly
     const tNamesList: { [k: string]: string } = {
-      exosomas: "Exosomas Celulares",
-      toxina: "Toxina Botulínica",
-      bioestimuladores: "Bioestimuladores de Soporte",
+      exosomas: t("hero.mainTreatments.exosomas"),
+      toxina: t("hero.mainTreatments.toxina"),
+      bioestimuladores: t("hero.mainTreatments.bioestimuladores"),
       skinboosters: "Skinboosters",
       melasma: "Aclaramiento de Melasma",
       lipopapada: "Reducción de Lipopapada",
@@ -74,31 +78,15 @@ export default function App() {
             onClick={() => handleTabChange("inicio")}
             className="flex items-center gap-3 cursor-pointer group select-none"
           >
-            <div className="w-10 h-10 rounded-full bg-[#0a2316] border border-nativa-gold-warm/85 text-nativa-gold-warm flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(212,175,55,0.4)] group-hover:border-nativa-gold-warm">
-              <svg
-                viewBox="0 0 100 100"
-                className="w-5.5 h-5.5 text-nativa-gold-warm fill-none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                {/* Elegant Left vertical line with fine serif footers */}
-                <path d="M32 28 L32 72 M26 28 L38 28 M26 72 L38 72" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" />
-                
-                {/* Elegant Right vertical line with fine serif footers */}
-                <path d="M68 28 L68 72 M62 28 L74 28 M62 72 L74 72" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" />
-                
-                {/* Calligraphic curved organic diagonal for "N" (representing natural aesthetics / clinical science wave) */}
-                <path d="M32 30 C42 42, 58 58, 68 70" stroke="currentColor" strokeWidth="4.5" strokeLinecap="round" />
-                
-                {/* Delicate gold leaf sprout on top-right as a mark of native plant cellular science */}
-                <path d="M68 28 C64 21, 55 24, 57 31 C62 33, 66 30, 68 28 Z" fill="currentColor" />
-              </svg>
+            <div className="w-10 h-10 rounded-full bg-[#2E2E2B] border border-nativa-gold-warm/85 text-nativa-gold-warm flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(194,181,155,0.4)] group-hover:border-nativa-gold-warm">
+              <span className="font-serif-elegant text-sm font-semibold tracking-tighter text-nativa-gold-warm">O</span>
             </div>
             <div className="flex flex-col border-l border-nativa-gold-warm/40 pl-3">
-              <h1 className="text-xl font-serif-elegant font-bold tracking-[0.15em] text-nativa-green-deep">
-                NATÍVA
+              <h1 className="text-xl font-serif-elegant font-bold tracking-[0.14em] text-nativa-green-deep">
+                ONE CLINIC
               </h1>
-              <span className="text-[9px] text-nativa-gold-warm tracking-[0.3em] font-medium leading-none uppercase">
-                Clinic
+              <span className="text-[10px] text-nativa-gold-warm font-serif-elegant italic tracking-[0.14em] leading-none mt-0.5 font-medium">
+                {language === "en" ? "Advanced Aesthetics" : language === "pt" ? "Estética Avançada" : "Estética Avanzada"}
               </span>
             </div>
           </div>
@@ -106,11 +94,11 @@ export default function App() {
           {/* Desktop Navigation links */}
           <nav className="hidden md:flex items-center gap-1 bg-white border border-nativa-green-accent/75 p-1 rounded-full px-2 shadow-sm">
             {[
-              { id: "inicio", label: "Inicio", icon: Heart },
-              { id: "somos", label: "Quiénes Somos", icon: Users },
-              { id: "tratamientos", label: "Tratamientos", icon: BookOpen },
-              { id: "reservas", label: "Agendar Cita", icon: Calendar },
-              { id: "asesor", label: "Consultorio IA", icon: BrainCircuit }
+              { id: "inicio", label: t("nav.home"), icon: Heart },
+              { id: "somos", label: t("nav.about"), icon: Users },
+              { id: "tratamientos", label: t("nav.treatments"), icon: BookOpen },
+              { id: "reservas", label: t("nav.book"), icon: Calendar },
+              { id: "asesor", label: t("nav.advisor"), icon: BrainCircuit }
             ].map((tab) => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
@@ -138,34 +126,176 @@ export default function App() {
 
           {/* Sede Contact Info */}
           <div className="hidden lg:flex items-center gap-4">
-            <span className="text-[11px] font-mono text-slate-500 font-medium">Medellín • El Poblado</span>
+            {/* Elegant Dropdown Language Selector */}
+            <div className="relative">
+              <button
+                onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-nativa-green-accent/60 text-[11px] font-bold shadow-sm hover:border-nativa-gold-warm transition-all cursor-pointer text-slate-700"
+              >
+                <Globe className="w-3.5 h-3.5 text-slate-400" />
+                <img
+                  src={
+                    language === "es"
+                      ? "https://flagcdn.com/w40/co.png"
+                      : language === "en"
+                      ? "https://flagcdn.com/w40/us.png"
+                      : "https://flagcdn.com/w40/br.png"
+                  }
+                  className="w-4.5 h-4.5 rounded-full object-cover border border-slate-100 shadow-xs"
+                  alt={language}
+                  referrerPolicy="no-referrer"
+                />
+                <span className="uppercase tracking-wider font-bold">{language}</span>
+                <ChevronDown className={`w-3 h-3 text-slate-400 transition-transform duration-300 ${isLangDropdownOpen ? "rotate-180" : ""}`} />
+              </button>
+
+              <AnimatePresence>
+                {isLangDropdownOpen && (
+                  <>
+                    {/* Invisible Backdrop to close dropdown on click outside */}
+                    <div 
+                      className="fixed inset-0 z-40" 
+                      onClick={() => setIsLangDropdownOpen(false)} 
+                    />
+                    <motion.div
+                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                      transition={{ duration: 0.15 }}
+                      className="absolute right-0 mt-2 z-50 w-36 rounded-2xl bg-white border border-nativa-green-accent shadow-xl overflow-hidden p-1.5"
+                    >
+                      {[
+                        { code: "es", label: "Español", flag: "https://flagcdn.com/w40/co.png" },
+                        { code: "en", label: "English", flag: "https://flagcdn.com/w40/us.png" },
+                        { code: "pt", label: "Português", flag: "https://flagcdn.com/w40/br.png" }
+                      ].map((lang) => (
+                        <button
+                          key={lang.code}
+                          onClick={() => {
+                            setLanguage(lang.code as any);
+                            setIsLangDropdownOpen(false);
+                          }}
+                          className={`w-full flex items-center gap-2 px-3 py-2 rounded-xl text-left text-xs font-semibold cursor-pointer transition-colors ${
+                            language === lang.code
+                              ? "bg-nativa-green-deep text-white"
+                              : "text-slate-600 hover:bg-slate-50 hover:text-nativa-green-deep"
+                          }`}
+                        >
+                          <img
+                            src={lang.flag}
+                            className="w-4.5 h-4.5 rounded-full object-cover border border-slate-100 shadow-xs"
+                            alt={lang.label}
+                            referrerPolicy="no-referrer"
+                          />
+                          <span>{lang.label}</span>
+                        </button>
+                      ))}
+                    </motion.div>
+                  </>
+                )}
+              </AnimatePresence>
+            </div>
+
+
             <button
               onClick={() => handleTabChange("reservas")}
               className="px-5 py-2 rounded-full bg-nativa-green-deep hover:bg-nativa-green-deep/90 text-[11px] font-semibold tracking-wide text-white cursor-pointer transition-all shadow-sm"
             >
-              Valoración Cortesía
+              {t("nav.courtesy")}
             </button>
           </div>
 
-          {/* Mobile Menu Icon toggler */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-xl bg-white border border-nativa-green-accent/60 text-slate-700 hover:text-nativa-green-deep hover:border-nativa-gold-warm/60 transition-colors cursor-pointer"
-            title="Menu"
-          >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
+          {/* Mobile Right Container (Language Switcher + Mobile Menu Toggle) */}
+          <div className="flex md:hidden items-center gap-2">
+            {/* Elegant Mobile Language Dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
+                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-white border border-nativa-green-accent/60 text-[10px] font-bold shadow-sm cursor-pointer text-slate-700"
+              >
+                <img
+                  src={
+                    language === "es"
+                      ? "https://flagcdn.com/w40/co.png"
+                      : language === "en"
+                      ? "https://flagcdn.com/w40/us.png"
+                      : "https://flagcdn.com/w40/br.png"
+                  }
+                  className="w-4 h-4 rounded-full object-cover border border-slate-100 shadow-xs"
+                  alt={language}
+                  referrerPolicy="no-referrer"
+                />
+                <span className="uppercase tracking-wide font-bold">{language}</span>
+                <ChevronDown className="w-3 h-3 text-slate-400" />
+              </button>
+
+              <AnimatePresence>
+                {isLangDropdownOpen && (
+                  <>
+                    <div 
+                      className="fixed inset-0 z-40" 
+                      onClick={() => setIsLangDropdownOpen(false)} 
+                    />
+                    <motion.div
+                      initial={{ opacity: 0, y: 5, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 5, scale: 0.95 }}
+                      transition={{ duration: 0.12 }}
+                      className="absolute right-0 mt-1.5 z-50 w-32 rounded-xl bg-white border border-nativa-green-accent shadow-lg overflow-hidden p-1"
+                    >
+                      {[
+                        { code: "es", label: "ESP", flag: "https://flagcdn.com/w40/co.png" },
+                        { code: "en", label: "ENG", flag: "https://flagcdn.com/w40/us.png" },
+                        { code: "pt", label: "POR", flag: "https://flagcdn.com/w40/br.png" }
+                      ].map((lang) => (
+                        <button
+                          key={lang.code}
+                          onClick={() => {
+                            setLanguage(lang.code as any);
+                            setIsLangDropdownOpen(false);
+                          }}
+                          className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-left text-[10px] font-bold cursor-pointer transition-colors ${
+                            language === lang.code
+                              ? "bg-nativa-green-deep text-white"
+                              : "text-slate-600 hover:bg-slate-50"
+                          }`}
+                        >
+                          <span className="flex items-center gap-2">
+                            <img
+                              src={lang.flag}
+                              className="w-4 h-4 rounded-full object-cover border border-slate-100 shadow-xs"
+                              alt={lang.label}
+                              referrerPolicy="no-referrer"
+                            />
+                            <span>{lang.label}</span>
+                          </span>
+                        </button>
+                      ))}
+                    </motion.div>
+                  </>
+                )}
+              </AnimatePresence>
+            </div>
+
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 rounded-xl bg-white border border-nativa-green-accent/60 text-slate-700 hover:text-nativa-green-deep hover:border-nativa-gold-warm/60 transition-colors cursor-pointer"
+              title="Menu"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
           <div className="absolute top-[88px] left-0 right-0 z-50 p-4 bg-white border-b border-nativa-green-accent/60 space-y-2 md:hidden animate-in fade-in slide-in-from-top-4 duration-300 shadow-md">
             {[
-              { id: "inicio", label: "Inicio", icon: Heart },
-              { id: "somos", label: "Quiénes Somos", icon: Users },
-              { id: "tratamientos", label: "Catálogo de Tratamientos", icon: BookOpen },
-              { id: "reservas", label: "Reservar Cita", icon: Calendar },
-              { id: "asesor", label: "Consultorio IA (Dra. Sofía)", icon: BrainCircuit }
+              { id: "inicio", label: t("nav.home"), icon: Heart },
+              { id: "somos", label: t("nav.about"), icon: Users },
+              { id: "tratamientos", label: t("nav.treatments"), icon: BookOpen },
+              { id: "reservas", label: t("nav.book"), icon: Calendar },
+              { id: "asesor", label: t("nav.mobileAdvisor"), icon: BrainCircuit }
             ].map((tab) => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
@@ -226,22 +356,18 @@ export default function App() {
             {/* Signature Column */}
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-[#0a2316] flex items-center justify-center text-nativa-gold-warm border border-nativa-gold-warm/40 shadow-sm">
-                  <svg
-                    viewBox="0 0 100 100"
-                    className="w-4.5 h-4.5 text-nativa-gold-warm fill-none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M32 28 L32 72 M26 28 L38 28 M26 72 L38 72" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-                    <path d="M68 28 L68 72 M62 28 L74 28 M62 72 L74 72" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-                    <path d="M32 30 C42 42, 58 58, 68 70" stroke="currentColor" strokeWidth="5" strokeLinecap="round" />
-                    <path d="M68 28 C64 21, 55 24, 57 31 C62 33, 66 30, 68 28 Z" fill="currentColor" />
-                  </svg>
+                <div className="w-8 h-8 rounded-full bg-[#2E2E2B] flex items-center justify-center text-nativa-gold-warm border border-nativa-gold-warm/40 shadow-sm">
+                  <span className="font-serif-elegant text-xs font-semibold text-nativa-gold-warm">O</span>
                 </div>
-                <h3 className="font-serif-elegant font-bold text-sm tracking-wider text-nativa-green-deep">NATÍVA CLINIC</h3>
-              </div>
+                <h3 className="font-serif-elegant font-bold text-sm tracking-wider text-nativa-green-deep">ONE CLINIC</h3>
+               </div>
               <p className="text-[11px] font-light leading-relaxed text-slate-500">
-                Líderes en medicina dermoestética, regenerativa y antienvejecimiento. Resultados naturales acreditados por la ciencia médica dermo-facial.
+                {language === "en"
+                  ? "Leaders in dermoaesthetic, regenerative and aging medicine. Natural results certified by dermo-facial medical science."
+                  : language === "pt"
+                  ? "Líderes em medicina dermoestética, regenerativa e antienvelhecimento. Resultados naturais certificados pela ciência médica dermo-facial."
+                  : "Líderes en medicina dermoestética, regenerativa y antienvejecimiento. Resultados naturales acreditados por la ciencia médica dermo-facial."
+                }
               </p>
               <div className="text-[10px] text-nativa-gold-warm tracking-widest font-mono uppercase font-semibold">
                 Medellín • Colombia
@@ -250,50 +376,54 @@ export default function App() {
 
             {/* Navigation Column */}
             <div className="space-y-3">
-              <h4 className="text-[11px] font-bold uppercase tracking-widest text-nativa-green-deep">Navegación</h4>
+              <h4 className="text-[11px] font-bold uppercase tracking-widest text-nativa-green-deep">
+                {language === "en" ? "Navigation" : language === "pt" ? "Navegação" : "Navegación"}
+              </h4>
               <div className="grid grid-cols-1 gap-2 text-[11px] font-light">
-                <button onClick={() => handleTabChange("inicio")} className="hover:text-nativa-gold-warm text-left cursor-pointer font-medium transition-colors">Inicio</button>
-                <button onClick={() => handleTabChange("somos")} className="hover:text-nativa-gold-warm text-left cursor-pointer font-medium transition-colors">Quiénes Somos</button>
-                <button onClick={() => handleTabChange("tratamientos")} className="hover:text-nativa-gold-warm text-left cursor-pointer font-medium transition-colors">Tratamientos</button>
-                <button onClick={() => handleTabChange("reservas")} className="hover:text-nativa-gold-warm text-left cursor-pointer font-medium transition-colors">Agendar Cita</button>
-                <button onClick={() => handleTabChange("asesor")} className="hover:text-nativa-gold-warm text-left cursor-pointer font-medium transition-colors">Asesor IA</button>
+                <button onClick={() => handleTabChange("inicio")} className="hover:text-nativa-gold-warm text-left cursor-pointer font-medium transition-colors">{t("nav.home")}</button>
+                <button onClick={() => handleTabChange("somos")} className="hover:text-nativa-gold-warm text-left cursor-pointer font-medium transition-colors">{t("nav.about")}</button>
+                <button onClick={() => handleTabChange("tratamientos")} className="hover:text-nativa-gold-warm text-left cursor-pointer font-medium transition-colors">{t("nav.treatments")}</button>
+                <button onClick={() => handleTabChange("reservas")} className="hover:text-nativa-gold-warm text-left cursor-pointer font-medium transition-colors">{t("nav.book")}</button>
+                <button onClick={() => handleTabChange("asesor")} className="hover:text-nativa-gold-warm text-left cursor-pointer font-medium transition-colors">{t("nav.advisor")}</button>
               </div>
             </div>
 
             {/* Popular Treatments Column */}
             <div className="space-y-3">
-              <h4 className="text-[11px] font-bold uppercase tracking-widest text-nativa-green-deep">Tratamientos Estrella</h4>
+              <h4 className="text-[11px] font-bold uppercase tracking-widest text-nativa-green-deep">{t("hero.mainTreatments.title")}</h4>
               <div className="grid grid-cols-1 gap-2 text-[11px] font-light">
-                <button onClick={() => handleSelectTreatmentFromHero("exosomas")} className="hover:text-nativa-gold-warm text-left cursor-pointer font-medium transition-colors">Exosomas Celulares</button>
-                <button onClick={() => handleSelectTreatmentFromHero("toxina")} className="hover:text-nativa-gold-warm text-left cursor-pointer font-medium transition-colors">Toxina Botulínica</button>
-                <button onClick={() => handleSelectTreatmentFromHero("bioestimuladores")} className="hover:text-nativa-gold-warm text-left cursor-pointer font-medium transition-colors">Bioestimuladores de Colágeno</button>
-                <button onClick={() => handleSelectTreatmentFromHero("biogluteos")} className="hover:text-nativa-gold-warm text-left cursor-pointer font-medium transition-colors">BioGlúteos</button>
+                <button onClick={() => handleSelectTreatmentFromHero("exosomas")} className="hover:text-nativa-gold-warm text-left cursor-pointer font-medium transition-colors">{t("hero.mainTreatments.exosomas")}</button>
+                <button onClick={() => handleSelectTreatmentFromHero("toxina")} className="hover:text-nativa-gold-warm text-left cursor-pointer font-medium transition-colors">{t("hero.mainTreatments.toxina")}</button>
+                <button onClick={() => handleSelectTreatmentFromHero("bioestimuladores")} className="hover:text-nativa-gold-warm text-left cursor-pointer font-medium transition-colors">{t("hero.mainTreatments.bioestimuladores")}</button>
+                <button onClick={() => handleSelectTreatmentFromHero("biogluteos")} className="hover:text-nativa-gold-warm text-left cursor-pointer font-medium transition-colors">{t("hero.mainTreatments.biogluteos")}</button>
               </div>
             </div>
 
             {/* Legal Column */}
             <div className="space-y-3">
-              <h4 className="text-[11px] font-bold uppercase tracking-widest text-nativa-green-deep">Credenciales y Rigor</h4>
-              <p className="text-[11px] font-light leading-relaxed text-slate-500">
-                Habilitados bajo la reglamentación del Ministerio de Salud de Colombia. Consultorios avalados. El Poblado, Sede de Excelencia Primera Unidad.
+              <h4 className="text-[11px] font-bold uppercase tracking-widest text-nativa-green-deep">
+                {language === "en" ? "Credentials & Rigor" : language === "pt" ? "Credenciais e Rigor" : "Credenciales y Rigor"}
+              </h4>
+              <p className="text-[11px] font-light leading-relaxed text-slate-500 font-serif-elegant">
+                {t("about.regulations")}
               </p>
               <div className="flex items-center gap-1.5 text-[10px] text-nativa-gold-warm font-semibold">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
-                Habilitación Seccional Salud Antioquia
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
+                {t("about.accreditation")}
               </div>
             </div>
           </div>
 
           <div className="border-t border-nativa-green-accent pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] font-light text-slate-450">
-            <p>© {new Date().getFullYear()} NATÍVA CLINIC • Premium Aesthetic Centers. Todos los derechos reservados.</p>
+            <p>{t("common.rights")}</p>
             <div className="flex items-center gap-4">
               <span className="hover:text-nativa-gold-warm transition-colors cursor-pointer flex items-center gap-0.5 font-medium">
-                Instagram <ArrowUpRight className="w-3 h-3" />
+                {t("common.instagram")} <ArrowUpRight className="w-3 h-3" />
               </span>
               <span className="hover:text-nativa-gold-warm transition-colors cursor-pointer flex items-center gap-0.5 font-medium">
-                WhatsApp Médico <ArrowUpRight className="w-3 h-3" />
+                {t("common.whatsapp")} <ArrowUpRight className="w-3 h-3" />
               </span>
-              <span>Protección de Datos Personales (Colombia)</span>
+              <span>{t("common.protection")}</span>
             </div>
           </div>
         </div>

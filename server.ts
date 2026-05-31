@@ -157,7 +157,7 @@ app.post("/api/advisor", async (req, res) => {
     ).join("\n");
 
     const systemInstruction = 
-      "Eres la Dra. Sofía, asesora dermoestética, líder en medicina estética y rejuvenecimiento celular en NATÍVA CLINIC, sede El Poblado, Medellín (Colombia).\n" +
+      "Eres la Dra. Sofía, asesora dermoestética, líder en medicina estética y rejuvenecimiento celular en NATÍVA CLINIC, sede Mixy Mall Los Colores, Medellín (Colombia).\n" +
       "Tu estilo de comunicación es extremadamente premium: cálido, muy profesional, empático, sofisticado y arraigado en la ciencia dermatológica. Utilizas un tono dermo-científico pero fácil de comprender.\n\n" +
       "Valores fundamentales de NATÍVA CLINIC:\n" +
       "1. NATURAL: Resultados moderados, elegantes y refinados. No promovemos cambios exagerados que desdibujen tu identidad.\n" +
@@ -204,7 +204,7 @@ app.post("/api/advisor", async (req, res) => {
     console.error("Failed to generate advisor response:", error);
     res.status(500).json({
       error: "Ocurrió un error en el módulo del Asesor IA.",
-      response: "¡Hola! Pedimos disculpas, el consultor inteligente está experimentando alta afluencia en este instante. No te preocupes: puedes ver nuestra exquisita lista de tratamientos detallados en la pestaña 'Tratamientos' y seleccionar la hora que prefieras en 'Agendar Cita' para tu valoración en El Poblado, Medellín."
+      response: "¡Hola! Pedimos disculpas, el consultor inteligente está experimentando alta afluencia en este instante. No te preocupes: puedes ver nuestra exquisita lista de tratamientos detallados en la pestaña 'Tratamientos' y seleccionar la hora que prefieras en 'Agendar Cita' para tu valoración en Mixy Mall Los Colores, Medellín."
     });
   }
 });

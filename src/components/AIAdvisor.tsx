@@ -29,7 +29,7 @@ export default function AIAdvisor({ onQuickBook }: AIAdvisorProps) {
         {
           id: "welcome",
           role: "model",
-          text: "¡Hola! Un placer saludarte. Soy la Dra. Sofía, asesora dermoestética e investigadora en NATÍVA CLINIC, sede El Poblado, Medellín.\n\nMi propósito es guiarte con rigor científico de forma cercana y empática a encontrar los protocolos de estética regenerativa idóneos para ti, respetando la expresividad e identidad de tu rostro y cuerpo.\n\nDime, ¿cuáles son tus objetivos estéticos actuales? ¿Te gustaría mejorar la elasticidad de tu piel, suavizar líneas gestuales, unificar el tono de tu rostro, o moldear tu silueta?",
+          text: "¡Hola! Un placer saludarte. Soy la Dra. Sofía, asesora dermoestética e investigadora en NATÍVA CLINIC, sede Mixy Mall Los Colores, Medellín.\n\nMi propósito es guiarte con rigor científico de forma cercana y empática a encontrar los protocolos de estética regenerativa idóneos para ti, respetando la expresividad e identidad de tu rostro y cuerpo.\n\nDime, ¿cuáles son tus objetivos estéticos actuales? ¿Te gustaría mejorar la elasticidad de tu piel, suavizar líneas gestuales, unificar el tono de tu rostro, o moldear tu silueta?",
           timestamp: new Date()
         }
       ]);
